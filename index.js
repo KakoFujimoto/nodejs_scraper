@@ -12,7 +12,14 @@ const URL = "https://search.rakuten.co.jp/search/mall/%E3%83%AF%E3%83%83%E3%83%9
 
 axios(URL).then((response) =>{
     const htmlParser = response.data;
-    console.log(htmlParser);
+    // console.log(htmlParser);
+
+    const $ = cheerio.load(htmlParser);
+
+    $(".searchresultitem" ,htmlParser).each(function(){
+        const title = $(this).find(".title").text();
+        console.log(title);
+    })
 });
 
 app.listen(PORT, console.log("surver is running!"));
