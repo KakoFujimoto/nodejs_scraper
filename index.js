@@ -6,13 +6,15 @@ const cheerio = require("cheerio");
 
 
 const app = express();
+const data = [];
 
-// スクレイピングのメソッドを書いていく
-const URL = "https://search.rakuten.co.jp/search/mall/%E3%83%AF%E3%83%83%E3%83%95%E3%83%AB/100283/";
+// スクレイピングのメソッド
+const URL = "https://search.rakuten.co.jp/search/mall/keyboard/";
 
-axios(URL).then((response) =>{
+axios.get(URL)
+.then((response) =>{
     const htmlParser = response.data;
-    // console.log(htmlParser);
+    console.log(htmlParser);
 
     const $ = cheerio.load(htmlParser);
 
@@ -20,6 +22,9 @@ axios(URL).then((response) =>{
         const title = $(this).find(".title").text();
         console.log(title);
     })
+    .catch((error) => {
+        console.error("Error fetching data:", error); // エラーが発生した場合にログに出力する
+    });
 });
 
 app.listen(PORT, console.log("surver is running!"));
